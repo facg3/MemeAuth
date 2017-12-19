@@ -1,12 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const dynamic = require('./dynamic');
+const { parse } = require('cookie');
+const { sign, verify } = require('jsonwebtoken');
+const SECRET = 'poiugyfguhijokpkoihugyfyguhijo';
+const userDetails = { userId: 5, role: 'admin' };
+
 
 const homepage = (request, response) => {
   fs.readFile(path.join(__dirname,"..", "index.html"), (err, file) => {
     if (err) {
       response.writeHead(500, {
-        "content-type": "text/html"
+        "content-type": "text/html",
       });
       response.end("<h1 style = 'text-align: center;'>SERVER ERROR</h1>");
     } else {
@@ -17,23 +22,6 @@ const homepage = (request, response) => {
     }
   });
 }
-
-const icon = (request, response) => {
-  fs.readFile(path.join(__dirname,"..", "favicon.ico"), (err, file) => {
-    if (err) {
-      response.writeHead(500, {
-        "content-type": "text/html"
-      });
-      response.end("<h1 style = 'text-align: center;'>SERVER ERROR</h1>");
-    } else {
-      response.writeHead(200, {
-        "content-type": "image/x-icon"
-      });
-      response.end(file);
-    }
-  });
-}
-
 
 const handler = (request, response) => {
 
@@ -56,6 +44,23 @@ const handler = (request, response) => {
     } else {
       response.writeHead(200, "Content-Type:" + filetype[extension])
       response.end(file);
+    }
+  });
+}
+const loginPages = (request, response) => {
+  console.log('after');
+  fs.readFile(path.join(__dirname, "..", "public", "login.html"), (err, res) => {
+    if (err) {
+      response.writeHead(500, {
+        "content-type": "text/html"
+      });
+      response.end("<h1 style = 'text-align: center;'>SERVER ERROR</h1>");
+    } else {
+      response.writeHead(200, {
+        "content-type": "text/html",
+        "Set-Cookie": `jwt=${userDetails}; HttpOnly`
+      });
+      response.end(res);
     }
   });
 }
@@ -114,6 +119,6 @@ module.exports = {
   homepage,
   handler,
   memeTag,
-  uploadMeme,
-  icon
+  loginPages,
+  uploadMeme
 }

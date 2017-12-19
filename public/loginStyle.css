@@ -1,0 +1,26 @@
+body, html {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.full{
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  background-color: orange;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button{
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  padding: 3px;
+  background-color: red;
+  border-radius: 25%;
+  outline: none;
+}
