@@ -8,6 +8,7 @@ const userDetails = { userId: 5, role: 'admin' };
 
 
 const homepage = (request, response) => {
+
   fs.readFile(path.join(__dirname,"..", "index.html"), (err, file) => {
     if (err) {
       response.writeHead(500, {
@@ -48,7 +49,6 @@ const handler = (request, response) => {
   });
 }
 const loginPages = (request, response) => {
-  console.log('after');
   fs.readFile(path.join(__dirname, "..", "public", "login.html"), (err, res) => {
     if (err) {
       response.writeHead(500, {
@@ -57,8 +57,7 @@ const loginPages = (request, response) => {
       response.end("<h1 style = 'text-align: center;'>SERVER ERROR</h1>");
     } else {
       response.writeHead(200, {
-        "content-type": "text/html",
-        "Set-Cookie": `jwt=${userDetails}; HttpOnly`
+        "content-type": "text/html"
       });
       response.end(res);
     }
@@ -112,6 +111,31 @@ request.on('end', function(err){
   })
  }
 
+const loginMeme = (request, response)=>{
+  var allInformation = "";
+  request.on("data", function(chunkOfData){
+    allinfo += chunkOfData
+
+  });
+
+  request.on('end', function(err){
+    var loggingin = dynamic.loginMemer(allInformation, (err, res)=>{
+      if(err){
+        response.writeHead(500, 'Content-Type: text/html');
+        response.end('<h1>ERROR!!</h1>');
+        console.log(err);}
+        }
+
+      else{
+        response.writeHead(200, 'Content-Type: text/plain');
+        var valid = (res)=>{return res?true:false}
+        response.end(valid.toString());
+      }
+
+
+    })
+  })
+}
 
 
 
@@ -120,5 +144,6 @@ module.exports = {
   handler,
   memeTag,
   loginPages,
-  uploadMeme
+  uploadMeme,
+  loginMeme
 }
