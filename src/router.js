@@ -20,9 +20,11 @@ const router = (request, response) => {
     handlers.uploadMeme(request, response);
   } else if (url === "/logmein") {
     handlers.loginMeme(request, response);
+  } else if (url === "/logmeout") {
+    handlers.logmeout(request, response);
   } else {
     response.writeHead(404);
-    response.end("PAGE NOT FOUND!!!!!!!!!!");
+    response.end("SORRY, PAGE NOT FOUND!");
   }
 }
 module.exports = router;

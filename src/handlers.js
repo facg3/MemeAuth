@@ -148,7 +148,7 @@ const loginMeme = (request, response) => {
         if (v) {
           response.writeHead(
             200, {
-              'Set-Cookie': 'logged_in=true; HttpOnly'
+              'Set-Cookie': 'logged_in=true'
             }
           );
           response.end('/');
@@ -165,7 +165,15 @@ const loginMeme = (request, response) => {
   })
 }
 
-
+const logmeout = (request, response) => {
+  response.writeHead(
+       200,
+       {
+         'Set-Cookie': 'logged_in=false'
+       }
+     );
+  response.end("/")
+}
 
 module.exports = {
   homepage,
@@ -173,5 +181,6 @@ module.exports = {
   memeTag,
   loginPages,
   uploadMeme,
-  loginMeme
+  loginMeme,
+  logmeout
 }
