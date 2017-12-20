@@ -52,8 +52,8 @@
 // }
 
 function login(){
-  var username = document.getElementById("username").textContent;
-  var password = document.getElementById("password").textContent;
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
   var information = JSON.stringify([username, password]);
   var url = "/logmein"
   var xhr = new XMLHttpRequest();
@@ -66,11 +66,7 @@ function login(){
     }else{
       console.log("error" + xhr.responseType);
     }
-    if(response){
 
-
-
-    }
 }
   xhr.open("POST", url);
   xhr.send(information);

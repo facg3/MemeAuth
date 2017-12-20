@@ -35,21 +35,20 @@ const addMeme = (info, cb) => {
 const loginMemer = (information, cb) => {
   const username = JSON.parse(information)[0];
   const password = JSON.parse(information)[1];
-  const sql2 = {
-    text: 'SELECT name FROM users WHERE name = $1'
+  const sql = {
+    text: 'SELECT name FROM users WHERE name = $1',
     values: [username]
   }
-  dbconnection.query(sql2, (err,res)=>{
+  dbconnection.query(sql, (err,res1)=>{
     if(err) cb(err);
-    cb(null, res.rows);
-    if(res.rows != []){
-      const sql = {
-        text: 'SELECT password FROM users WHERE name = $1'
-        values: [username, password]
+    else if(res1.rows != []){
+      const sql2 = {
+        text: 'SELECT password FROM users WHERE name = $1',
+        values: [username]
       }
-      dbconnection.query(sql, (err,res)=>{
+      dbconnection.query(sql2, (err,res2)=>{
         if(err) cb(err);
-        cb(null, res.rows);
+        cb(null, res2.rows);
       });
 
 
