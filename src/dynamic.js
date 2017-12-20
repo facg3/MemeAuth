@@ -1,6 +1,7 @@
 const dbconnection = require('../database/dbconnection');
 
 const findMeme = (tag, cb) => {
+  
   const sql = {
     text: `select url from memes where tags LIKE $1;`,
     values: [`%${tag}%`]
@@ -8,10 +9,8 @@ const findMeme = (tag, cb) => {
 
   dbconnection.query(sql, (err, res) => {
     if (err) cb(err);
-
-
-var urls = res.rows.map(function(val){
-  return val.url
+    var urls = res.rows.map(function(val){
+    return val.url
 })
 
 cb(null, JSON.stringify(urls));
@@ -36,7 +35,7 @@ const loginMemer = (information, cb) => {
   const username = JSON.parse(information)[0];
   const password = JSON.parse(information)[1];
   const sql = {
-    text: 'SELECT name FROM users WHERE name = $1',
+    text: 'SELECT password FROM users WHERE name = $1',
     values: [username]
   }
   dbconnection.query(sql, (err,res1)=>{
@@ -51,6 +50,10 @@ const loginMemer = (information, cb) => {
         cb(null, res2.rows);
       });
 
+
+    }
+    else if (res1.rows == []){
+      cb(null, ["error"])
 
     }
   })

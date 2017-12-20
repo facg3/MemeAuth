@@ -1,28 +1,26 @@
 const handlers = require("./handlers.js");
-// const loginHandlers = require('../loginPage/loginHandlers.js');
 const router = (request, response) => {
   const url = request.url;
   const method = request.method;
 
-  if (url === "/"){
-    handlers.homepage(request, response);
-  }
-  else if (url.startsWith("/public")){
+  if (url === "/") {
+    if (!request.headers.cookie) {
+      handlers.loginPages(request, response);
+    } else {
+      console.log(request.headers.cookie)
+      handlers.homepage(request, response);
+      };
+    }
+   else if (url.startsWith("/public")) {
 
     handlers.handler(request, response);
-  }
-  else if (url === "/getMeme"){
+  } else if (url === "/getMeme") {
     handlers.memeTag(request, response);
-  }
-  else if (url === "/insertMeme"){
+  } else if (url === "/insertMeme") {
     handlers.uploadMeme(request, response);
-  } else if (url === "/login" && method == 'GET') {
-    handlers.loginPages(request, response);
-  }
-  else if(url === "/logmein"){
+  } else if (url === "/logmein") {
     handlers.loginMeme(request, response);
-  }
-  else {
+  } else {
     response.writeHead(404);
     response.end("PAGE NOT FOUND!!!!!!!!!!");
   }
