@@ -114,22 +114,35 @@ request.on('end', function(err){
 const loginMeme = (request, response)=>{
   var allInformation = "";
   request.on("data", function(chunkOfData){
-    allinfo += chunkOfData
+    allInformation += chunkOfData
 
   });
 
   request.on('end', function(err){
+    console.log(allInformation + " is AllInformation");
     var loggingin = dynamic.loginMemer(allInformation, (err, res)=>{
       if(err){
         response.writeHead(500, 'Content-Type: text/html');
         response.end('<h1>ERROR!!</h1>');
         console.log(err);}
-        }
+
 
       else{
         response.writeHead(200, 'Content-Type: text/plain');
-        var valid = (res)=>{return res?true:false}
-        response.end(valid.toString());
+
+        var valid = (r)=>{return r?true:false}
+        var v = valid(res[0].password)
+        if (v){
+          response.writeHead(
+        302,
+        {
+          'Set-Cookie': 'logged_in=true; HttpOnly',
+          'Location': '/'
+        }
+      );
+}
+
+        response.end();
       }
 
 
