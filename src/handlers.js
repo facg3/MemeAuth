@@ -1,15 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 const dynamic = require('./dynamic');
-const { parse } = require('cookie');
-const { sign, verify } = require('jsonwebtoken');
+const {
+  parse
+} = require('cookie');
+const {
+  sign,
+  verify
+} = require('jsonwebtoken');
 const SECRET = 'poiugyfguhijokpkoihugyfyguhijo';
-const userDetails = { userId: 5, role: 'admin' };
+const userDetails = {
+  userId: 5,
+  role: 'admin'
+};
 
 
 const homepage = (request, response) => {
 
-  fs.readFile(path.join(__dirname,"..", "index.html"), (err, file) => {
+  fs.readFile(path.join(__dirname, "..", "index.html"), (err, file) => {
     if (err) {
       response.writeHead(500, {
         "content-type": "text/html",
@@ -65,11 +73,11 @@ const loginPages = (request, response) => {
 }
 
 const memeTag = (request, response) => {
-var allTag = "";
-request.on('data', function(chunkOfData) {
-  allTag += chunkOfData;
-});
-request.on('end', function(err) {
+  var allTag = "";
+  request.on('data', function(chunkOfData) {
+    allTag += chunkOfData;
+  });
+  request.on('end', function(err) {
     if (err) {
       console.log(err);
     } else {
@@ -86,64 +94,71 @@ request.on('end', function(err) {
 
 
     }
-  });};
+  });
+};
 
-const uploadMeme = (request, response) =>{
+const uploadMeme = (request, response) => {
   var allinfo = "";
-  request.on("data", function(chunkOfData){
+  request.on("data", function(chunkOfData) {
     allinfo += chunkOfData
   });
 
-request.on('end', function(err){
-    var uploading = dynamic.addMeme(allinfo, (err, res)=>{
-      if(err){
+  request.on('end', function(err) {
+    var uploading = dynamic.addMeme(allinfo, (err, res) => {
+      if (err) {
         response.writeHead(500, 'Content-Type: text/html');
         response.end('<h1>ERROR!!</h1>');
-        console.log(err);}
-
-      else{
+        console.log(err);
+      } else {
         response.writeHead(200, 'Content-Type: application/json');
-        response.end(JSON.stringify(res));}
+        response.end(JSON.stringify(res));
+      }
 
-      })
+    })
 
 
   })
- }
+}
 
-const loginMeme = (request, response)=>{
+const loginMeme = (request, response) => {
   var allInformation = "";
-  request.on("data", function(chunkOfData){
+  request.on("data", function(chunkOfData) {
     allInformation += chunkOfData
 
   });
 
-  request.on('end', function(err){
-    console.log(allInformation + " is AllInformation");
-    var loggingin = dynamic.loginMemer(allInformation, (err, res)=>{
-      if(err){
+  request.on('end', function(err) {
+
+    var loggingin = dynamic.loginMemer(allInformation, (err, res) => {
+      if (err) {
         response.writeHead(500, 'Content-Type: text/html');
         response.end('<h1>ERROR!!</h1>');
-        console.log(err);}
-
-
-      else{
+        console.log(err);
+      } else {
         response.writeHead(200, 'Content-Type: text/plain');
 
-        var valid = (r)=>{return r?true:false}
-        var v = valid(res[0].password)
-        if (v){
-          response.writeHead(
-        302,
-        {
-          'Set-Cookie': 'logged_in=true; HttpOnly',
-          'Location': '/'
-        }
-      );
-}
+        var valid = (password) => {
 
-        response.end();
+          return password === JSON.parse(allInformation)[1];
+        }
+
+        if(res.length > 0){
+        var v = valid(res[0].password)
+
+        if (v) {
+          response.writeHead(
+            200, {
+              'Set-Cookie': 'logged_in=true; HttpOnly'
+            }
+          );
+          response.end('/');
+        }
+        else{
+        response.end("Incorrect password");}
       }
+      else{response.end("This user does not exist!")}
+
+    }
 
 
     })
