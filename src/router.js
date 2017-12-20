@@ -19,6 +19,9 @@ const router = (request, response) => {
   } else if (url === "/login" && method == 'GET') {
     handlers.loginPages(request, response);
   }
+  else if(url === "/logmein"){
+    handlers.loginMeme(request, response);
+  }
   else {
     response.writeHead(404);
     response.end("PAGE NOT FOUND!!!!!!!!!!");
