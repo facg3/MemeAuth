@@ -12,10 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "env2": "^2.2.0",
-    "pg": "^7.4.0",
     "cookie": "^0.3.1",
-    "jsonwebtoken": "^7.4.2"
+    "env2": "^2.2.0",
+    "heroku": "^0.2.0",
+    "jsonwebtoken": "^7.4.2",
+    "pg": "^7.4.0"
   },
   "devDependencies": {
     "db-mock": "0.0.9",
