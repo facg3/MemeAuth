@@ -1,27 +1,31 @@
 {
-  "name": "pg-codealong",
+  "name": "memeauth",
   "version": "1.0.0",
-  "description": "",
+  "description": "People die, heroes get remembered, but Memers live forever.",
   "main": "index.js",
   "scripts": {
-    "test": "tape ./src/tests.js | tap-spec",
-    "start": "node ./src/server.js",
-    "watch": "nodemon ./src/server.js"
+    "test": "node ./src/tests.js",
+    "start": "node ./src/server.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facg3/MemeAuth.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/facg3/MemeAuth/issues"
+  },
+  "homepage": "https://github.com/facg3/MemeAuth#readme",
   "dependencies": {
     "cookie": "^0.3.1",
     "env2": "^2.2.0",
-    "heroku": "^0.2.0",
-    "jsonwebtoken": "^7.4.2",
+    "jsonwebtoken": "^8.1.0",
     "pg": "^7.4.0"
   },
   "devDependencies": {
-    "db-mock": "0.0.9",
-    "nodemon": "^1.12.5",
-    "shot": "^3.4.2",
+    "nodemon": "^1.14.1",
+    "shot": "^4.0.4",
     "tap-spec": "^4.1.1",
     "tape": "^4.8.0"
   }
